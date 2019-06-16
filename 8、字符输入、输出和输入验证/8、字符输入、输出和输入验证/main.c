@@ -12,13 +12,19 @@ void echo_eof(void);
 void echo_file(void);
 void guess(void);
 void guess_a(void);
+void display(char ch,int lines,int width);
+void showchar(void);
+char get_choice(void);
+void count(void);
+void get_choice_start(void);
 int main(int argc, const char * argv[]) {
     
 //    echoChar();
 //    echo_eof();
 //    echo_file();
 //    guess();
-    guess_a();
+//    guess_a();
+//    showchar();
     return 0;
 }
 
@@ -68,6 +74,14 @@ void guess(void)
     char ch;
     while ((ch=getchar())!='y') {
         printf("这个数是%d吗?\n",++guess);
+        // 读取的字符不是y，可能是换行符，遇到这个需要跳过
+        // 这里判断是不是‘\n’,如果不是继续。如果是等待
+        if (getchar()!='\n') {
+            continue;
+        }
+//        while (getchar()!='\n') {
+//            continue;
+//        }
     }
     printf("哈，被我猜出来了!\n");
 }
@@ -98,4 +112,73 @@ void guess_a(void)
         }
     }
     printf("哈，被我猜出来了!\n");
+}
+
+void showchar(void)
+{
+    int ch;
+    int row,cols;
+    printf("Enter a character and two integers:\n");
+    while ((ch = getchar()) != '\n') {
+        if (scanf("%d %d",&row,&cols) != 2) {
+            break;
+        }
+        display(ch, row, cols);
+        while (getchar() != '\n') {
+            continue;
+        }
+        printf("Enter another character and two integers;\n");
+        printf("Enter a newline to qquit.\n");
+    }
+    printf("Buy!\n");
+}
+
+void display(char ch,int lines,int width)
+{
+    int row,col;
+    for (row = 1; row<= lines; row++) {
+        for (col = 1; col<=width; col++) {
+            putchar(ch);
+        }
+        putchar('\n');
+    }
+}
+
+void get_choice_start(void)
+{
+    int choice;
+    while ((choice = get_choice()) != 'q') {
+        switch (choice) {
+            case 'a':
+                printf("Buy low, sell high.\n");
+                break;
+            case 'b':
+                putchar('\a');
+                break;
+            case 'c':
+                count();
+                break;
+            default:printf("Program error!\n");
+                break;
+        }
+    }
+}
+
+char get_choice(void)
+{
+    int ch;
+    printf("Enter thr letter of your choice.\n");
+    printf("a.  advice                b. bell\n");
+    printf("c.  count                 q. quit\n");
+    ch = getchar();
+    while ((ch < 'a' || ch > 'c') && ch != 'a') {
+        printf("Please respond with a,b,c,or q\n");
+        ch = getchar();
+    }
+    return ch;
+}
+
+void count(void)
+{
+    
 }

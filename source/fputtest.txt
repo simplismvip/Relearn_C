@@ -1,0 +1,2 @@
+/Users/jl/Desktop/Code/Relearn_C/source/fputtest.txt
+zhe shi yi ge ce shi cheng xu!
